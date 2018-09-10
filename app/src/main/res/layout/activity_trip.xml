@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sliding_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    sothree:umanoFadeColor="@android:color/transparent"
+    sothree:umanoPanelHeight="@dimen/default_sliding_panel_height"
+    sothree:umanoShadowHeight="4dp">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.TripActivity" />
+
+    <!--Sliding panel-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_sliding_panel_height"
+            android:weightSum="2"
+            android:padding="5dp">
+            <Button
+                android:id="@+id/start_recording_btn"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:background="@color/green_start"
+                android:text="@string/start_recording"
+                android:textColor="@color/white"
+                android:textAllCaps="false"/>
+            <Button
+                android:id="@+id/stop_recording_button"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:background="@color/red_stop"
+                android:text="@string/stop_recording"
+                android:textColor="@color/white"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
