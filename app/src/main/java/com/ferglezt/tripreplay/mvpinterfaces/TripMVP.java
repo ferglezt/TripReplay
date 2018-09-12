@@ -11,6 +11,7 @@ public interface TripMVP {
         void requestLocationPermission(int code);
         void setEnabledStartButton(boolean enabled);
         void setEnabledStopButton(boolean enabled);
+        void showUnfinishedTripDialog(String message);
     }
 
     interface Presenter extends FlowableListener {

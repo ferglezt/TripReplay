@@ -88,5 +88,7 @@ public class TripPresenter implements TripMVP.Presenter {
     @Override
     public void onUnfinishedTripFound(List<Point> points) {
         if (BuildConfig.DEBUG) Log.d(TAG, "onUnfinishedTripFound");
+
+        view.showUnfinishedTripDialog("You have an unfinished trip"); //TODO: no hardcode
     }
 }
