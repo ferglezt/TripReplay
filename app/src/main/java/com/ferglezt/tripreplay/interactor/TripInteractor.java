@@ -88,8 +88,8 @@ public class TripInteractor implements TripMVP.Interactor {
         unfinishedTripDisposable = appDataBase
                 .pointDao()
                 .getAllByTripId(Point.DEFAULT_TRIP_ID)
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe(points -> {
                     if (points.size() > 0) {
                         flowableListener.onUnfinishedTripFound(points);
