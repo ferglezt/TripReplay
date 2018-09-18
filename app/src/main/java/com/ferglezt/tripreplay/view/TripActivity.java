@@ -164,7 +164,7 @@ public class TripActivity extends FragmentActivity implements OnMapReadyCallback
 
         new AlertDialog.Builder(this)
                 .setMessage(String.format(getString(R.string.unfinished_trip_alert_message), formattedDate))
-                .setNegativeButton(getString(R.string.delete), (dialog, which) -> presenter.onDeleteUnfinishedTripClick(points))
+                .setNegativeButton(R.string.delete, (dialog, which) -> presenter.onDeleteUnfinishedTripClick(points))
                 .setNeutralButton(R.string.keep_recording_over_trip, null)
                 .setPositiveButton(R.string.save, (dialog, which) -> presenter.onSaveUnfinishedTripClick(points))
                 .show();
