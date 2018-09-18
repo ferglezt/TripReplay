@@ -22,4 +22,7 @@ public interface PointDao {
 
     @Query("DELETE FROM points WHERE tripId = :tripId")
     void deleteByTripId(int tripId);
+
+    @Query("UPDATE points SET tripId = :newTripId WHERE tripId = :oldTripId")
+    void updateTripId(long newTripId, long oldTripId);
 }

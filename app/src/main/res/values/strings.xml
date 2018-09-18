@@ -10,4 +10,8 @@
 
     <string name="start_recording">Start Recording</string>
     <string name="stop_recording">Stop Recording</string>
+    <string name="unfinished_trip_alert_message">What would you like to do with this trip %s?</string>
+    <string name="delete">Delete</string>
+    <string name="keep_recording_over_trip">Keep recording over this trip</string>
+    <string name="save">Save</string>
 </resources>

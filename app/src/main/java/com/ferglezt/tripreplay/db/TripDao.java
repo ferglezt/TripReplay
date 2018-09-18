@@ -23,7 +23,7 @@ public interface TripDao {
     Maybe<Trip> findById(int id);
 
     @Insert
-    void insert(Trip trip);
+    long insert(Trip trip);
 
     @Delete
     void delete(Trip trip);

@@ -11,7 +11,7 @@ public interface TripMVP {
         void requestLocationPermission(int code);
         void setEnabledStartButton(boolean enabled);
         void setEnabledStopButton(boolean enabled);
-        void showUnfinishedTripDialog(String message);
+        void showUnfinishedTripDialog(List<Point> points);
     }
 
     interface Presenter extends FlowableListener {
@@ -23,6 +23,8 @@ public interface TripMVP {
         void onLocationPermissionGranted();
         void onStartRecordingClick();
         void onStopRecordingClick();
+        void onSaveUnfinishedTripClick(List<Point> points);
+        void onDeleteUnfinishedTripClick(List<Point> points);
     }
 
     interface Interactor {
@@ -34,6 +36,8 @@ public interface TripMVP {
         boolean checkLocationPermission();
         boolean isLocationServiceRunning();
         void checkForUnfinishedTrip();
+        void saveUnfinishedTrip(List<Point> points);
+        void deleteUnfinishedTrip(List<Point> points);
 
     }
 

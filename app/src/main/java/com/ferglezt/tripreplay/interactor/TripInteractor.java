@@ -7,11 +7,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 
+import com.ferglezt.tripreplay.R;
 import com.ferglezt.tripreplay.db.AppDataBase;
 import com.ferglezt.tripreplay.model.Point;
+import com.ferglezt.tripreplay.model.Trip;
 import com.ferglezt.tripreplay.mvpinterfaces.TripMVP;
 import com.ferglezt.tripreplay.service.GpsService;
 
+import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -25,6 +31,7 @@ public class TripInteractor implements TripMVP.Interactor {
     private TripMVP.FlowableListener flowableListener;
     private Disposable locationDisposable;
     private Disposable unfinishedTripDisposable;
+    private Disposable saveTripDisposable;
 
     public TripInteractor(Context context, AppDataBase appDataBase) {
         this.context = context;
@@ -96,6 +103,29 @@ public class TripInteractor implements TripMVP.Interactor {
                     }
                     unfinishedTripDisposable.dispose();
                 });
+    }
+
+    @Override
+    public void saveUnfinishedTrip(List<Point> points) {
+        Trip trip = new Trip();
+        trip.setStartDate(points.get(0).getDate());
+        trip.setEndDate(points.get(points.size() - 1).getDate());
+
+        saveTripDisposable = Single.fromCallable(() -> appDataBase.tripDao().insert(trip))
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(id -> {
+                    appDataBase.pointDao().updateTripId(id, Point.DEFAULT_TRIP_ID);
+                    saveTripDisposable.dispose();
+                });
+    }
+
+    @Override
+    public void deleteUnfinishedTrip(List<Point> points) {
+        Completable.fromAction(() -> appDataBase.pointDao().deleteByTripId(points.get(0).getTripId()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe();
     }
 
 }

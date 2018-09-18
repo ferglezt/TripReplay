@@ -76,6 +76,17 @@ public class TripPresenter implements TripMVP.Presenter {
         interactor.stopLocationListener();
         view.setEnabledStartButton(true);
         view.setEnabledStopButton(false);
+        interactor.checkForUnfinishedTrip();
+    }
+
+    @Override
+    public void onSaveUnfinishedTripClick(List<Point> points) {
+        interactor.saveUnfinishedTrip(points);
+    }
+
+    @Override
+    public void onDeleteUnfinishedTripClick(List<Point> points) {
+        interactor.deleteUnfinishedTrip(points);
     }
 
     @Override
@@ -89,6 +100,6 @@ public class TripPresenter implements TripMVP.Presenter {
     public void onUnfinishedTripFound(List<Point> points) {
         if (BuildConfig.DEBUG) Log.d(TAG, "onUnfinishedTripFound");
 
-        view.showUnfinishedTripDialog("You have an unfinished trip"); //TODO: no hardcode
+        view.showUnfinishedTripDialog(points);
     }
 }

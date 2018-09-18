@@ -1,6 +1,7 @@
 package com.ferglezt.tripreplay.view;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -28,8 +29,11 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -154,12 +158,16 @@ public class TripActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void showUnfinishedTripDialog(String message) {
-        //TODO : Add positive and negative buttons
-        new AlertDialog.Builder(this)
-                .setMessage(message)
-                .show();
+    public void showUnfinishedTripDialog(List<Point> points) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        String formattedDate = dateFormat.format(points.get(points.size() - 1).getDate());
 
+        new AlertDialog.Builder(this)
+                .setMessage(String.format(getString(R.string.unfinished_trip_alert_message), formattedDate))
+                .setNegativeButton(getString(R.string.delete), (dialog, which) -> presenter.onDeleteUnfinishedTripClick(points))
+                .setNeutralButton(R.string.keep_recording_over_trip, null)
+                .setPositiveButton(R.string.save, (dialog, which) -> presenter.onSaveUnfinishedTripClick(points))
+                .show();
     }
 
     @OnClick(R.id.start_recording_btn)
