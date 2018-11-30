@@ -14,4 +14,5 @@
     <string name="delete">Delete</string>
     <string name="keep_recording_over_trip">Keep recording over this trip</string>
     <string name="save">Save</string>
+    <string name="title_activity_trip_list">TripListActivity</string>
 </resources>

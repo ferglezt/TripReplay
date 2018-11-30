@@ -1,0 +1,79 @@
+package com.ferglezt.tripreplay.view;
+
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+
+import com.ferglezt.tripreplay.R;
+import com.ferglezt.tripreplay.TripApplication;
+import com.ferglezt.tripreplay.db.AppDataBase;
+import com.ferglezt.tripreplay.interactor.TripListInteractor;
+import com.ferglezt.tripreplay.model.Trip;
+import com.ferglezt.tripreplay.mvpinterfaces.TripListMVP;
+import com.ferglezt.tripreplay.presenter.TripListPresenter;
+import com.ferglezt.tripreplay.view.adapter.TripAdapter;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class TripListActivity extends AppCompatActivity implements TripListMVP.View {
+
+    @BindView(R.id.trip_recycler) RecyclerView tripRecycler;
+
+    private TripAdapter adapter;
+    private TripListMVP.Presenter presenter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_trip_list);
+        ButterKnife.bind(this);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        AppDataBase appDataBase = ((TripApplication) getApplication()).getAppComponent().getAppDataBase();
+        TripListMVP.Interactor interactor = new TripListInteractor(appDataBase);
+        presenter = new TripListPresenter(this, interactor);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener((view) -> {
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            presenter.onNewTripClick();
+        });
+
+        presenter.onCreate();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenter.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+    }
+
+    @Override
+    public void populateRecyclerView(List<Trip> trips) {
+        adapter = new TripAdapter(trips);
+        tripRecycler.setLayoutManager(new LinearLayoutManager(this));
+        tripRecycler.setAdapter(adapter);
+    }
+}
