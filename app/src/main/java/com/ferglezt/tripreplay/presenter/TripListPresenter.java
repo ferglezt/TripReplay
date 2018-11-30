@@ -39,7 +39,7 @@ public class TripListPresenter implements TripListMVP.Presenter {
 
     @Override
     public void onNewTripClick() {
-
+        view.showNewTripScreen();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.ferglezt.tripreplay.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -75,5 +76,11 @@ public class TripListActivity extends AppCompatActivity implements TripListMVP.V
         adapter = new TripAdapter(trips);
         tripRecycler.setLayoutManager(new LinearLayoutManager(this));
         tripRecycler.setAdapter(adapter);
+    }
+
+    @Override
+    public void showNewTripScreen() {
+        Intent intent = new Intent(this, TripActivity.class);
+        startActivity(intent);
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 public interface TripListMVP {
     interface View {
         void populateRecyclerView(List<Trip> trips);
+        void showNewTripScreen();
     }
 
     interface Presenter extends FlowableListener {
