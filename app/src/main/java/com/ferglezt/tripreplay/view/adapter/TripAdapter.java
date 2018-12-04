@@ -27,7 +27,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     }
 
     private String getFormattedStartAndEndDate(Trip trip) {
-        DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
+        DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
         return sdf.format(trip.getStartDate()) + " - " + sdf.format(trip.getEndDate());
     }
 
