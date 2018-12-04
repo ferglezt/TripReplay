@@ -46,18 +46,8 @@ public class DbTest {
         pointDao.getAllByTripId(1)
                 .test()
                 .awaitDone(3, TimeUnit.SECONDS)
-                .assertValue(new Predicate<List<Point>>() {
-                    @Override
-                    public boolean test(List<Point> points) throws Exception {
-                        return points.get(0).getTripId() == 1;
-                    }
-                })
-                .assertValue(new Predicate<List<Point>>() {
-                    @Override
-                    public boolean test(List<Point> points) throws Exception {
-                        return points.get(0).getLatitude() == -17.59;
-                    }
-                });
+                .assertValue(points -> points.get(0).getTripId() == 1)
+                .assertValue(points -> points.get(0).getLatitude() == -17.59);
     }
 
     @Test
@@ -73,18 +63,8 @@ public class DbTest {
         tripDao.getAll()
                 .test()
                 .awaitDone(3, TimeUnit.SECONDS)
-                .assertValue(new Predicate<List<Trip>>() {
-                    @Override
-                    public boolean test(List<Trip> trips) throws Exception {
-                        return trips.get(0).getStartDate().getTime() == 123456789;
-                    }
-                })
-                .assertValue(new Predicate<List<Trip>>() {
-                    @Override
-                    public boolean test(List<Trip> trips) throws Exception {
-                        return trips.get(0).getDescripton().equals("This is a test trip");
-                    }
-                });
+                .assertValue(trips -> trips.get(0).getStartDate().getTime() == 123456789)
+                .assertValue(trips -> trips.get(0).getDescripton().equals("This is a test trip"));
     }
 
     @After
