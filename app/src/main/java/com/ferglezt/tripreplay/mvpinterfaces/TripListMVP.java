@@ -8,6 +8,7 @@ public interface TripListMVP {
     interface View {
         void populateRecyclerView(List<Trip> trips);
         void showNewTripScreen();
+        void showTripDetal(Trip trip);
     }
 
     interface Presenter extends FlowableListener {
@@ -16,6 +17,7 @@ public interface TripListMVP {
         void onPause();
         void onDestroy();
         void onNewTripClick();
+        void onItemClick(Trip trip);
     }
 
     interface Interactor {

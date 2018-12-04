@@ -43,6 +43,11 @@ public class TripListPresenter implements TripListMVP.Presenter {
     }
 
     @Override
+    public void onItemClick(Trip trip) {
+        view.showTripDetal(trip);
+    }
+
+    @Override
     public void onTripsFound(List<Trip> trips) {
         view.populateRecyclerView(trips);
     }

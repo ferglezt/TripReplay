@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ferglezt.tripreplay.R;
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     private List<Trip> trips;
+    private OnItemClickListener onItemClickListener;
 
     public TripAdapter(List<Trip> trips) {
         this.trips = trips;
@@ -43,6 +45,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         Trip trip = trips.get(position);
         String description = getFormattedStartAndEndDate(trip);
         holder.description.setText(description);
+        holder.itemLayout.setOnClickListener((view) -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(trip);
+            }
+        });
     }
 
     @Override
@@ -51,6 +58,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.item_trip_layout) LinearLayout itemLayout;
         @BindView(R.id.thumbnail) ImageView thumbnail;
         @BindView(R.id.description) TextView description;
 
@@ -58,5 +66,13 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Trip trip);
     }
 }

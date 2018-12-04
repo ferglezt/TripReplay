@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ferglezt.tripreplay.R;
 import com.ferglezt.tripreplay.TripApplication;
@@ -46,7 +47,6 @@ public class TripListActivity extends AppCompatActivity implements TripListMVP.V
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener((view) -> {
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             presenter.onNewTripClick();
         });
 
@@ -74,6 +74,7 @@ public class TripListActivity extends AppCompatActivity implements TripListMVP.V
     @Override
     public void populateRecyclerView(List<Trip> trips) {
         adapter = new TripAdapter(trips);
+        adapter.setOnItemClickListener((trip) -> presenter.onItemClick(trip));
         tripRecycler.setLayoutManager(new LinearLayoutManager(this));
         tripRecycler.setAdapter(adapter);
     }
@@ -82,5 +83,10 @@ public class TripListActivity extends AppCompatActivity implements TripListMVP.V
     public void showNewTripScreen() {
         Intent intent = new Intent(this, TripActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void showTripDetal(Trip trip) {
+        Toast.makeText(this, "TODO: " + trip.getId(), Toast.LENGTH_LONG).show();
     }
 }
