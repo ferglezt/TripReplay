@@ -77,6 +77,7 @@ public class TripListActivity extends AppCompatActivity implements TripListMVP.V
         adapter.setOnItemClickListener((trip) -> presenter.onItemClick(trip));
         tripRecycler.setLayoutManager(new LinearLayoutManager(this));
         tripRecycler.setAdapter(adapter);
+        //TODO: Manage gestures like swipe in recyclerview
     }
 
     @Override
