@@ -11,6 +11,9 @@ import android.widget.Toast;
 import com.ferglezt.tripreplay.BaseActivity;
 import com.ferglezt.tripreplay.R;
 import com.ferglezt.tripreplay.db.AppDataBase;
+import com.ferglezt.tripreplay.di.component.DaggerTripListComponent;
+import com.ferglezt.tripreplay.di.component.TripListComponent;
+import com.ferglezt.tripreplay.di.module.TripListModule;
 import com.ferglezt.tripreplay.interactor.TripListInteractor;
 import com.ferglezt.tripreplay.model.Trip;
 import com.ferglezt.tripreplay.mvpinterfaces.TripListMVP;
@@ -18,6 +21,8 @@ import com.ferglezt.tripreplay.presenter.TripListPresenter;
 import com.ferglezt.tripreplay.view.adapter.TripAdapter;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,20 +32,21 @@ public class TripListActivity extends BaseActivity implements TripListMVP.View {
     @BindView(R.id.trip_recycler) RecyclerView tripRecycler;
 
     private TripAdapter adapter;
-    private TripListMVP.Presenter presenter;
+    @Inject TripListMVP.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_list);
-        ButterKnife.bind(this);
+
+        DaggerTripListComponent.builder()
+                .appComponent(getAppComponent())
+                .tripListModule(new TripListModule(this))
+                .build()
+                .inject(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        AppDataBase appDataBase = getAppComponent().getAppDataBase();
-        TripListMVP.Interactor interactor = new TripListInteractor(appDataBase);
-        presenter = new TripListPresenter(this, interactor);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener((view) -> {

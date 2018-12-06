@@ -34,7 +34,6 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class TripActivity extends BaseActivity implements OnMapReadyCallback, TripMVP.View {
@@ -58,10 +57,6 @@ public class TripActivity extends BaseActivity implements OnMapReadyCallback, Tr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip);
-        ButterKnife.bind(this);
-        hideActionBar();
-
-        slidingUpPanelLayout.setAnchorPoint(SLIDING_LAYOUT_ANCHOR);
 
         DaggerTripComponent.builder()
                 .appComponent(getAppComponent())
@@ -69,12 +64,14 @@ public class TripActivity extends BaseActivity implements OnMapReadyCallback, Tr
                 .build()
                 .inject(this);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        hideActionBar();
+        slidingUpPanelLayout.setAnchorPoint(SLIDING_LAYOUT_ANCHOR);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         presenter.onCreate();
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
