@@ -1,18 +1,16 @@
 package com.ferglezt.tripreplay.view;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 
+import com.ferglezt.tripreplay.BaseActivity;
 import com.ferglezt.tripreplay.BuildConfig;
 import com.ferglezt.tripreplay.R;
 import com.ferglezt.tripreplay.TripApplication;
@@ -39,7 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TripActivity extends FragmentActivity implements OnMapReadyCallback, TripMVP.View {
+public class TripActivity extends BaseActivity implements OnMapReadyCallback, TripMVP.View {
 
     private static final String TAG = TripActivity.class.getSimpleName();
 
@@ -61,10 +59,11 @@ public class TripActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip);
         ButterKnife.bind(this);
+        hideActionBar();
 
         slidingUpPanelLayout.setAnchorPoint(SLIDING_LAYOUT_ANCHOR);
 
-        AppDataBase appDataBase = ((TripApplication) getApplication()).getAppComponent().getAppDataBase();
+        AppDataBase appDataBase = appComponent().getAppDataBase();
         TripMVP.Interactor interactor = new TripInteractor(this, appDataBase);
         presenter = new TripPresenter(this, interactor);
 

@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ferglezt.tripreplay.BaseActivity;
 import com.ferglezt.tripreplay.R;
 import com.ferglezt.tripreplay.TripApplication;
 import com.ferglezt.tripreplay.db.AppDataBase;
@@ -25,7 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TripListActivity extends AppCompatActivity implements TripListMVP.View {
+public class TripListActivity extends BaseActivity implements TripListMVP.View {
 
     @BindView(R.id.trip_recycler) RecyclerView tripRecycler;
 
@@ -41,7 +42,7 @@ public class TripListActivity extends AppCompatActivity implements TripListMVP.V
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        AppDataBase appDataBase = ((TripApplication) getApplication()).getAppComponent().getAppDataBase();
+        AppDataBase appDataBase = appComponent().getAppDataBase();
         TripListMVP.Interactor interactor = new TripListInteractor(appDataBase);
         presenter = new TripListPresenter(this, interactor);
 
