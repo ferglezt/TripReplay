@@ -1,4 +1,4 @@
-package com.ferglezt.tripreplay.di;
+package com.ferglezt.tripreplay.di.module;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;

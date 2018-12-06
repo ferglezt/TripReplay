@@ -13,12 +13,10 @@ import android.widget.Button;
 import com.ferglezt.tripreplay.BaseActivity;
 import com.ferglezt.tripreplay.BuildConfig;
 import com.ferglezt.tripreplay.R;
-import com.ferglezt.tripreplay.TripApplication;
-import com.ferglezt.tripreplay.db.AppDataBase;
-import com.ferglezt.tripreplay.interactor.TripInteractor;
+import com.ferglezt.tripreplay.di.component.DaggerTripComponent;
+import com.ferglezt.tripreplay.di.module.TripModule;
 import com.ferglezt.tripreplay.model.Point;
 import com.ferglezt.tripreplay.mvpinterfaces.TripMVP;
-import com.ferglezt.tripreplay.presenter.TripPresenter;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -32,6 +30,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +52,7 @@ public class TripActivity extends BaseActivity implements OnMapReadyCallback, Tr
     private GoogleMap mMap;
     private Polyline polyline;
 
-    private TripMVP.Presenter presenter;
+    @Inject TripMVP.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +63,11 @@ public class TripActivity extends BaseActivity implements OnMapReadyCallback, Tr
 
         slidingUpPanelLayout.setAnchorPoint(SLIDING_LAYOUT_ANCHOR);
 
-        AppDataBase appDataBase = appComponent().getAppDataBase();
-        TripMVP.Interactor interactor = new TripInteractor(this, appDataBase);
-        presenter = new TripPresenter(this, interactor);
+        DaggerTripComponent.builder()
+                .appComponent(getAppComponent())
+                .tripModule(new TripModule(this))
+                .build()
+                .inject(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);

@@ -3,17 +3,13 @@ package com.ferglezt.tripreplay.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Toast;
 
 import com.ferglezt.tripreplay.BaseActivity;
 import com.ferglezt.tripreplay.R;
-import com.ferglezt.tripreplay.TripApplication;
 import com.ferglezt.tripreplay.db.AppDataBase;
 import com.ferglezt.tripreplay.interactor.TripListInteractor;
 import com.ferglezt.tripreplay.model.Trip;
@@ -42,7 +38,7 @@ public class TripListActivity extends BaseActivity implements TripListMVP.View {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        AppDataBase appDataBase = appComponent().getAppDataBase();
+        AppDataBase appDataBase = getAppComponent().getAppDataBase();
         TripListMVP.Interactor interactor = new TripListInteractor(appDataBase);
         presenter = new TripListPresenter(this, interactor);
 
