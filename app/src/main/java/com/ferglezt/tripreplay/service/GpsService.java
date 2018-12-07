@@ -49,6 +49,7 @@ public class GpsService extends Service implements
         if (BuildConfig.DEBUG) Log.d(TAG, "onCreate");
         super.onCreate();
 
+        //TODO: inject dependencies in a better way
         ((TripApplication)getApplication()).getAppComponent().inject(this);
 
         if (googleApiClient == null) {
