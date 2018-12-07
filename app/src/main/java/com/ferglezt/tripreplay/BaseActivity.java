@@ -15,10 +15,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    protected AppComponent getAppComponent() {
-        return ((TripApplication) getApplication()).getAppComponent();
-    }
-
     protected void hideActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

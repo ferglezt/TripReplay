@@ -12,14 +12,8 @@ import dagger.Provides;
 @Module
 public class TripListModule {
 
-    private TripListActivity tripListActivity;
-
-    public TripListModule(TripListActivity tripListActivity) {
-        this.tripListActivity = tripListActivity;
-    }
-
     @Provides
-    public TripListMVP.View provideView() {
+    public TripListMVP.View provideView(TripListActivity tripListActivity) {
         return tripListActivity;
     }
 

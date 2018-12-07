@@ -6,6 +6,8 @@ import android.content.Context;
 
 import com.ferglezt.tripreplay.db.AppDataBase;
 import com.ferglezt.tripreplay.db.RoomLocationUpdatesManager;
+import com.ferglezt.tripreplay.di.component.TripComponent;
+import com.ferglezt.tripreplay.di.component.TripListComponent;
 import com.ferglezt.tripreplay.service.LocationUpdatesManager;
 
 import javax.inject.Singleton;
@@ -13,17 +15,11 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-@Module
+@Module(subcomponents = {TripComponent.class, TripListComponent.class})
 public class AppModule {
 
-    private Application application;
-
-    public AppModule(Application application) {
-        this.application = application;
-    }
-
     @Provides
-    public Context provideContext() {
+    public Context provideContext(Application application) {
         return application;
     }
 

@@ -5,9 +5,12 @@ import com.ferglezt.tripreplay.di.module.TripModule;
 import com.ferglezt.tripreplay.view.TripActivity;
 
 import dagger.Component;
+import dagger.Subcomponent;
+import dagger.android.AndroidInjector;
 
-@Component(dependencies = AppComponent.class, modules = TripModule.class)
+@Subcomponent(modules = TripModule.class)
 @ActivityScope
-public interface TripComponent {
-    void inject(TripActivity activity);
+public interface TripComponent extends AndroidInjector<TripActivity>{
+    @Subcomponent.Builder
+    abstract class Builder extends AndroidInjector.Builder<TripActivity>{}
 }

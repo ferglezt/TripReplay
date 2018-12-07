@@ -4,10 +4,12 @@ import com.ferglezt.tripreplay.di.ActivityScope;
 import com.ferglezt.tripreplay.di.module.TripListModule;
 import com.ferglezt.tripreplay.view.TripListActivity;
 
-import dagger.Component;
+import dagger.Subcomponent;
+import dagger.android.AndroidInjector;
 
+@Subcomponent(modules = TripListModule.class)
 @ActivityScope
-@Component(dependencies = AppComponent.class, modules = TripListModule.class)
-public interface TripListComponent {
-    void inject(TripListActivity activity);
+public interface TripListComponent extends AndroidInjector<TripListActivity> {
+    @Subcomponent.Builder
+    abstract class Builder extends AndroidInjector.Builder<TripListActivity>{}
 }

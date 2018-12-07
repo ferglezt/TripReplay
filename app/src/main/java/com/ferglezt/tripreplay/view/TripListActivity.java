@@ -10,14 +10,9 @@ import android.widget.Toast;
 
 import com.ferglezt.tripreplay.BaseActivity;
 import com.ferglezt.tripreplay.R;
-import com.ferglezt.tripreplay.db.AppDataBase;
-import com.ferglezt.tripreplay.di.component.DaggerTripListComponent;
-import com.ferglezt.tripreplay.di.component.TripListComponent;
 import com.ferglezt.tripreplay.di.module.TripListModule;
-import com.ferglezt.tripreplay.interactor.TripListInteractor;
 import com.ferglezt.tripreplay.model.Trip;
 import com.ferglezt.tripreplay.mvpinterfaces.TripListMVP;
-import com.ferglezt.tripreplay.presenter.TripListPresenter;
 import com.ferglezt.tripreplay.view.adapter.TripAdapter;
 
 import java.util.List;
@@ -26,6 +21,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 
 public class TripListActivity extends BaseActivity implements TripListMVP.View {
 
@@ -39,11 +35,7 @@ public class TripListActivity extends BaseActivity implements TripListMVP.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_list);
 
-        DaggerTripListComponent.builder()
-                .appComponent(getAppComponent())
-                .tripListModule(new TripListModule(this))
-                .build()
-                .inject(this);
+        AndroidInjection.inject(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -13,8 +13,6 @@ import android.widget.Button;
 import com.ferglezt.tripreplay.BaseActivity;
 import com.ferglezt.tripreplay.BuildConfig;
 import com.ferglezt.tripreplay.R;
-import com.ferglezt.tripreplay.di.component.DaggerTripComponent;
-import com.ferglezt.tripreplay.di.module.TripModule;
 import com.ferglezt.tripreplay.model.Point;
 import com.ferglezt.tripreplay.mvpinterfaces.TripMVP;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +33,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import dagger.android.AndroidInjection;
 
 public class TripActivity extends BaseActivity implements OnMapReadyCallback, TripMVP.View {
 
@@ -58,11 +57,7 @@ public class TripActivity extends BaseActivity implements OnMapReadyCallback, Tr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip);
 
-        DaggerTripComponent.builder()
-                .appComponent(getAppComponent())
-                .tripModule(new TripModule(this))
-                .build()
-                .inject(this);
+        AndroidInjection.inject(this);
 
         hideActionBar();
         slidingUpPanelLayout.setAnchorPoint(SLIDING_LAYOUT_ANCHOR);
