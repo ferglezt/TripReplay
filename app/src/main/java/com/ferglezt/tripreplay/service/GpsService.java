@@ -24,13 +24,14 @@ import android.util.Log;
 import com.ferglezt.tripreplay.BuildConfig;
 import com.ferglezt.tripreplay.R;
 import com.ferglezt.tripreplay.view.TripActivity;
-import com.ferglezt.tripreplay.TripApplication;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
 
 public class GpsService extends Service implements
         GoogleApiClient.ConnectionCallbacks,
@@ -49,8 +50,7 @@ public class GpsService extends Service implements
         if (BuildConfig.DEBUG) Log.d(TAG, "onCreate");
         super.onCreate();
 
-        //TODO: inject dependencies in a better way
-        ((TripApplication)getApplication()).getAppComponent().inject(this);
+        AndroidInjection.inject(this);
 
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(getApplication())

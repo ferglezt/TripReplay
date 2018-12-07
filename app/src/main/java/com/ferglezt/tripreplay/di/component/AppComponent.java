@@ -5,6 +5,7 @@ import android.app.Application;
 import com.ferglezt.tripreplay.TripApplication;
 import com.ferglezt.tripreplay.di.module.ActivityBuilderModule;
 import com.ferglezt.tripreplay.di.module.AppModule;
+import com.ferglezt.tripreplay.di.module.ServiceBuilderModule;
 import com.ferglezt.tripreplay.service.GpsService;
 
 import javax.inject.Singleton;
@@ -13,7 +14,7 @@ import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 
-@Singleton @Component(modules = {AppModule.class, AndroidInjectionModule.class, ActivityBuilderModule.class})
+@Singleton @Component(modules = {AppModule.class, AndroidInjectionModule.class, ActivityBuilderModule.class, ServiceBuilderModule.class})
 public interface AppComponent {
     @Component.Builder
     interface Builder {
@@ -21,5 +22,4 @@ public interface AppComponent {
         AppComponent build();
     }
     void inject(TripApplication application);
-    void inject(GpsService service);
 }
