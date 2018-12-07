@@ -14,7 +14,6 @@ import dagger.Provides;
 @Module
 public class TripModule {
 
-
     @Provides
     public TripMVP.View provideView(TripActivity tripActivity) {
         return tripActivity;
