@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class TripActivity extends BaseActivity implements OnMapReadyCallback, Tr
 
         AndroidInjection.inject(this);
 
-        hideActionBar();
+        setTitle(null);
         slidingUpPanelLayout.setAnchorPoint(SLIDING_LAYOUT_ANCHOR);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -104,7 +105,7 @@ public class TripActivity extends BaseActivity implements OnMapReadyCallback, Tr
 
     @Override
     public void setSpeed(float speed) {
-
+        setTitle(new DecimalFormat("#.##").format(speed) + " Km/h");
     }
 
     @Override

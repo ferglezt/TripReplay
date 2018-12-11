@@ -31,14 +31,16 @@ public class TripPresenter implements TripMVP.Presenter {
 
     @Override
     public void onResume() {
+        interactor.startLocationListener();
+
         if (interactor.isLocationServiceRunning()) {
-            interactor.startLocationListener();
             view.setEnabledStartButton(false);
             view.setEnabledStopButton(true);
+            view.showActionBar();
         } else {
-            interactor.startLocationListener();
             view.setEnabledStartButton(true);
             view.setEnabledStopButton(false);
+            view.hideActionBar();
         }
     }
 
@@ -68,6 +70,7 @@ public class TripPresenter implements TripMVP.Presenter {
         interactor.startLocationListener();
         view.setEnabledStartButton(false);
         view.setEnabledStopButton(true);
+        view.showActionBar();
     }
 
     @Override
@@ -76,6 +79,7 @@ public class TripPresenter implements TripMVP.Presenter {
         interactor.stopLocationListener();
         view.setEnabledStartButton(true);
         view.setEnabledStopButton(false);
+        view.hideActionBar();
         interactor.checkForUnfinishedTrip();
     }
 
@@ -94,6 +98,12 @@ public class TripPresenter implements TripMVP.Presenter {
         if (BuildConfig.DEBUG) Log.d(TAG, "onPointsReceived");
 
         view.setPolylinePoints(points);
+
+        if (points.size() > 1) {
+            Point point1 = points.get(points.size() - 2);
+            Point point2 = points.get(points.size() - 1);
+            view.setSpeed(interactor.getSpeed(point1, point2));
+        }
     }
 
     @Override

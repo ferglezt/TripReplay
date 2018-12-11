@@ -7,12 +7,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 
-import com.ferglezt.tripreplay.R;
 import com.ferglezt.tripreplay.db.AppDataBase;
 import com.ferglezt.tripreplay.model.Point;
 import com.ferglezt.tripreplay.model.Trip;
 import com.ferglezt.tripreplay.mvpinterfaces.TripMVP;
 import com.ferglezt.tripreplay.service.GpsService;
+import com.ferglezt.tripreplay.util.GpsUtil;
 
 import java.util.List;
 
@@ -126,6 +126,18 @@ public class TripInteractor implements TripMVP.Interactor {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe();
+    }
+
+    @Override
+    public float getSpeed(Point point1, Point point2) {
+        float distance = GpsUtil.distanceBetween(point1.getLatitude(), point1.getLongitude(),
+                                                 point2.getLatitude(), point2.getLongitude());
+        long time = point2.getDate().getTime() - point1.getDate().getTime();
+        long timeSeconds = time / 1000;
+        float speed = distance / timeSeconds;
+
+        return (float)3.6 * speed; // Km/h
+
     }
 
 }

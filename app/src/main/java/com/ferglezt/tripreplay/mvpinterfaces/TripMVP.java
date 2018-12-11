@@ -12,6 +12,8 @@ public interface TripMVP {
         void setEnabledStartButton(boolean enabled);
         void setEnabledStopButton(boolean enabled);
         void showUnfinishedTripDialog(List<Point> points);
+        void hideActionBar();
+        void showActionBar();
     }
 
     interface Presenter extends FlowableListener {
@@ -38,6 +40,7 @@ public interface TripMVP {
         void checkForUnfinishedTrip();
         void saveUnfinishedTrip(List<Point> points);
         void deleteUnfinishedTrip(List<Point> points);
+        float getSpeed(Point point1, Point point2);
 
     }
 

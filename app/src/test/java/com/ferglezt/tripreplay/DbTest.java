@@ -16,10 +16,8 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.functions.Predicate;
 
 @RunWith(RobolectricTestRunner.class)
 public class DbTest {
