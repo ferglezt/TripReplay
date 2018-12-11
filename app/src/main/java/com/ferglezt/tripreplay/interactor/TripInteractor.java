@@ -130,8 +130,10 @@ public class TripInteractor implements TripMVP.Interactor {
 
     @Override
     public float getSpeed(Point point1, Point point2) {
+        //TODO move this code to a util function if speed is needed in another component
         float distance = GpsUtil.distanceBetween(point1.getLatitude(), point1.getLongitude(),
                                                  point2.getLatitude(), point2.getLongitude());
+
         long time = point2.getDate().getTime() - point1.getDate().getTime();
         long timeSeconds = time / 1000;
         float speed = distance / timeSeconds;
