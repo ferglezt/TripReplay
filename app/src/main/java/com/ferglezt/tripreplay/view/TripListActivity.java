@@ -41,9 +41,7 @@ public class TripListActivity extends BaseActivity implements TripListMVP.View {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener((view) -> {
-            presenter.onNewTripClick();
-        });
+        fab.setOnClickListener(view -> presenter.onNewTripClick());
 
         presenter.onCreate();
     }
@@ -69,7 +67,7 @@ public class TripListActivity extends BaseActivity implements TripListMVP.View {
     @Override
     public void populateRecyclerView(List<Trip> trips) {
         adapter = new TripAdapter(trips);
-        adapter.setOnItemClickListener((trip) -> presenter.onItemClick(trip));
+        adapter.setOnItemClickListener(trip -> presenter.onItemClick(trip));
         tripRecycler.setLayoutManager(new LinearLayoutManager(this));
         tripRecycler.setAdapter(adapter);
         //TODO: Manage gestures like swipe in recyclerview
